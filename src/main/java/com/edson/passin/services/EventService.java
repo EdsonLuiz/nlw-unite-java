@@ -2,6 +2,7 @@ package com.edson.passin.services;
 
 import com.edson.passin.domain.attendee.Attendee;
 import com.edson.passin.domain.event.Event;
+import com.edson.passin.domain.event.exceptions.EventNotFoundException;
 import com.edson.passin.dto.event.EventIdDTO;
 import com.edson.passin.dto.event.EventRequestDTO;
 import com.edson.passin.dto.event.EventResponseDTO;
@@ -20,7 +21,7 @@ public class EventService {
     private final AttendeeRepository attendeeRepository;
 
     public EventResponseDTO getEventDetail(String eventId) {
-        Event event = this.eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Event not found with ID " + eventId));
+        Event event = this.eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException( "Event not found with ID " + eventId));
         List<Attendee> attendeeList = this.attendeeRepository.findByEventId(eventId);
         return new EventResponseDTO(event, attendeeList.size());
     }
