@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "check_ins")
@@ -21,7 +21,7 @@ public class CheckIn {
     private Integer id;
 
     @Column(name = "created_at")
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
 
     @OneToOne
     @JoinColumn(name = "attendee_id", nullable = false)
