@@ -1,6 +1,7 @@
 package com.edson.passin.services;
 
 import com.edson.passin.domain.attendee.Attendee;
+import com.edson.passin.domain.attendee.exceptions.AttendeeAlreadyRegistered;
 import com.edson.passin.domain.checkin.CheckIn;
 import com.edson.passin.dto.attendee.AttendeeDetails;
 import com.edson.passin.dto.attendee.AttendeesResponseDTO;
@@ -31,5 +32,16 @@ public class AttendeeService {
             return new AttendeeDetails(attendee.getId(), attendee.getName(), attendee.getEmail(), attendee.getCreatedAt(), checkedInAt);
         }).toList();
         return new AttendeesResponseDTO(attendeeDetails);
+    }
+
+    public Attendee registerAttendee(Attendee newAttendee) {
+        return this.attendeeRepository.save(newAttendee);
+    }
+
+    public void verifyAttendeeSubscription(String email, String eventId) {
+        Optional<Attendee> registered = this.attendeeRepository.findByEventIdAndEmail(eventId, email);
+        if(registered.isPresent()) {
+            throw new AttendeeAlreadyRegistered("Attendee is already registered");
+        }
     }
 }
