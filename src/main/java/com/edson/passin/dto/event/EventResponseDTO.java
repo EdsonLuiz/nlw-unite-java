@@ -2,7 +2,9 @@ package com.edson.passin.dto.event;
 
 import com.edson.passin.domain.event.Event;
 import com.edson.passin.dto.event.EventDetailDTO;
+import lombok.Getter;
 
+@Getter
 public class EventResponseDTO {
     EventDetailDTO event;
 
