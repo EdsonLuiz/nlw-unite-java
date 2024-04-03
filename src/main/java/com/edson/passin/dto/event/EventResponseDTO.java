@@ -1,6 +1,7 @@
-package com.edson.passin.dto;
+package com.edson.passin.dto.event;
 
 import com.edson.passin.domain.event.Event;
+import com.edson.passin.dto.event.EventDetailDTO;
 
 public class EventResponseDTO {
     EventDetailDTO event;
