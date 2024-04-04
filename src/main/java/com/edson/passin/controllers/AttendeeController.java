@@ -2,12 +2,10 @@ package com.edson.passin.controllers;
 
 import com.edson.passin.dto.attendee.AttendeeBadgeResponseDTO;
 import com.edson.passin.services.AttendeeService;
+import com.edson.passin.services.CheckInService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -21,5 +19,10 @@ public class AttendeeController {
         return ResponseEntity.ok(attendeeBadgeResponseDTO);
     }
 
-
+    @PostMapping("/{attendeeId}/check-in")
+    public ResponseEntity registerCheckIn(@PathVariable String attendeeId, UriComponentsBuilder uriComponentsBuilder) {
+        this.attendeeService.checkInAttendee(attendeeId);
+        var uri = uriComponentsBuilder.path("/v1/attendees/{attendeeId}/badge").buildAndExpand(attendeeId).toUri();
+        return ResponseEntity.created(uri).build();
+    }
 }
